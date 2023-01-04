@@ -30,21 +30,14 @@ public class Main {
     public static int check(int[][] board, int height) {
         int N = board.length;
         int[][] visit = new int[N][N];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (board[i][j] <= height && visit[i][j] == 0) {
-                    visit[i][j] = 1;
-                    bfs(board, visit, i, j, height);
-                }
-            }
-        }
+
         int count = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if(visit[i][j] == 0) {
+                if (board[i][j] > height && visit[i][j] == 0) {
                     visit[i][j] = 1;
                     count++;
-                    bfs(visit, visit, i, j, 0);
+                    bfs(board, visit, i, j, height);
                 }
             }
         }
@@ -62,7 +55,7 @@ public class Main {
                 int nx = poll.get(0) + dx[i];
                 int ny = poll.get(1) + dy[i];
                 if (nx < 0 || nx >= board.length || ny < 0 || ny >= board.length) continue;
-                if (board[nx][ny] <= height && visit[nx][ny] == 0) {
+                if (board[nx][ny] > height && visit[nx][ny] == 0) {
                     visit[nx][ny] = 1;
                     queue.offer(List.of(nx, ny));
                 }
